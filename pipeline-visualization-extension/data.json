@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "name": "Customer A",
+        "email": "a@example.com",
+        "pipeline": [
+            { "stage": "Prospecting", "status": "completed" },
+            { "stage": "Qualification", "status": "completed" },
+            { "stage": "Proposal", "status": "completed" },
+            { "stage": "Negotiation", "status": "completed" },
+            { "stage": "Closed-Won", "status": "completed" }
+        ]
+    },
+    {
+        "id": 2,
+        "name": "Customer B",
+        "email": "b@example.com",
+        "pipeline": [
+            { "stage": "Lead Generation", "status": "completed" },
+            { "stage": "Initial Contact", "status": "completed" },
+            { "stage": "Needs Analysis", "status": "active" },
+            { "stage": "Proposal", "status": "pending" },
+            { "stage": "Closed", "status": "pending" }
+        ]
+    },
+    {
+        "id": 3,
+        "name": "Customer C",
+        "email": "c@example.com",
+        "pipeline": [
+            { "stage": "Discovery", "status": "completed" },
+            { "stage": "Proposal", "status": "completed" },
+            { "stage": "Negotiation", "status": "active" },
+            { "stage": "Contract Signing", "status": "pending" },
+            { "stage": "Onboarding", "status": "pending" }
+        ]
+    }
+]

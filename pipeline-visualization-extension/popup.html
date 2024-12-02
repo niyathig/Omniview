@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pipeline Visualization</title>
+    
+    <!-- Inline styles to set popup dimensions and styles -->
+    <style>
+        /* Popup Dimensions and Basic Styling */
+        body {
+            width: 500px;
+            height: 400px;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #f0f0f0; /* Ensure background is visible */
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Parent Container as a Flex Container */
+        .parent-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center vertically */
+            align-items: center;     /* Center horizontally */
+            width: 100%;
+            height: 100%;
+            background-color: #f0f0f0;
+        }
+
+        /* CRM Status Indicator (Optional Enhancement) */
+        #crmStatus {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Buttons Container */
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;         /* Space between buttons */
+            width: 100%;
+            padding: 20px;     /* Space inside the container */
+        }
+
+        /* Common Button Styles */
+        .connect-to-crm,
+        .choose-lead {
+            width: 80%;             /* Buttons occupy 80% of container width */
+            max-width: 300px;       /* Adjust as needed */
+            height: 60px;
+            background-color: #000000;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            text-align: center;
+            padding: 0;             /* Remove padding to prevent width issues */
+            line-height: 60px;      /* Vertically center the text */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+        }
+
+        /* Hover Effects */
+        .connect-to-crm:hover,
+        .choose-lead:hover {
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        /* Omniview Image Styles */
+        .omniview {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px; /* Space below the icon */
+        }
+
+        /* Ensure the image fits within the container */
+        .omniview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; /* 10% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            max-width: 500px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .close,
+        .close-crm {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus,
+        .close-crm:hover,
+        .close-crm:focus {
+            color: black;
+            text-decoration: none;
+        }
+
+        .customer-item {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+        .customer-item:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* Loading Indicator Styles */
+        .loading {
+            font-size: 18px;
+            color: #333333;
+            margin-top: 20px;
+        }
+
+        /* Data Container Styles (Optional) */
+        .data-container {
+            width: 90%;
+            max-height: 200px;
+            overflow-y: auto;
+            background-color: #ffffff;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            padding: 10px;
+            margin-top: 20px;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: pre-wrap; /* Preserve formatting */
+        }
+
+        /* Pipeline Container Styles */
+        #pipelineContainer {
+            width: 90%;             /* Reduce width for better fit */
+            max-width: 450px;       /* Adjust as needed */
+            padding: 20px;
+            display: none;          /* Hidden by default */
+            box-sizing: border-box;
+        }
+
+        #pipelineContainer h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .pipeline-stage {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            position: relative;
+        }
+
+        .pipeline-stage .stage-name {
+            /* Stage name styling */
+        }
+
+        .pipeline-stage .stage-status {
+            /* Stage status styling */
+            font-size: 14px;
+            font-weight: normal;
+        }
+
+        .completed {
+            background-color: grey;
+        }
+
+        .active {
+            background-color: blue;
+        }
+
+        .pending {
+            background-color: lightblue;
+            color: #000; /* Dark text for better readability on light background */
+        }
+
+        /* Back Button Styles */
+        #backButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: #555;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        #backButton:hover {
+            background-color: #333;
+        }
+
+        /* CRM Options Styles */
+        .crm-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .crm-option {
+            width: 100%;
+            padding: 10px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .crm-option:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="parent-container">
+        <!-- Omniview Icon -->
+        <div class="omniview">
+            <img src="assets/Omniview.png" alt="Omniview">
+        </div>
+
+        <!-- CRM Status Indicator (Optional Enhancement) -->
+        <div id="crmStatus">No CRM Connected</div>
+
+        <!-- Buttons Container -->
+        <div class="buttons-container">
+            <!-- Connect to CRM Button -->
+            <button class="connect-to-crm" aria-label="Connect to CRM">Connect to CRM</button>
+            <!-- Choose Lead Button -->
+            <button class="choose-lead" aria-label="Choose Lead">Choose Lead</button>
+        </div>
+
+        <!-- Loading Indicator -->
+        <div id="loading" class="loading" style="display: none;">Loading...</div>
+
+        <!-- Data Display Container (Optional) -->
+        <div class="data-container" style="display: none;"></div>
+    </div>
+
+    <!-- The Modal for Choosing Lead -->
+    <div id="leadModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Select a Customer</h2>
+            <div id="customerList">
+                <!-- Customer items will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- The Modal for Selecting CRM -->
+    <div id="crmModal" class="modal">
+        <div class="modal-content">
+            <span class="close-crm">&times;</span>
+            <h2>Select CRM</h2>
+            <div class="crm-options">
+                <button class="crm-option" data-file="data.json">CRM 1</button>
+                <button class="crm-option" data-file="data2.json">CRM 2</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pipeline Container -->
+    <div id="pipelineContainer">
+        <h2>Sales Pipeline</h2>
+        <div id="pipelineStages">
+            <!-- Pipeline stages will be inserted here -->
+        </div>
+        <button id="backButton">Back</button>
+    </div>
+
+    <!-- Include JavaScript -->
+    <script src="popup.js"></script>
+</body>
+</html>

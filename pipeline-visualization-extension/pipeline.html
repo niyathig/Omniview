@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pipeline Visualization</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        .pipeline-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .pipeline-item {
+            background-color: #007BFF;
+            color: white;
+            padding: 15px 30px;
+            margin: 10px 0;
+            border-radius: 5px;
+            width: 80%;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .customer-info {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sales Pipeline</h1>
+    <div class="customer-info" id="customerInfo">
+        <!-- Selected customer info will appear here -->
+    </div>
+    <div class="pipeline-container" id="pipeline">
+        <!-- Pipeline items will be inserted here -->
+    </div>
+    <script src="pipeline.js"></script>
+</body>
+</html>

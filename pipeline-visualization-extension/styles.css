@@ -1,0 +1,186 @@
+/* styles.css */
+
+/* Popup Dimensions and Basic Styling */
+body {
+    width: 500px;
+    height: 400px;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f0f0f0; /* Ensure background is visible */
+    font-family: Arial, sans-serif;
+}
+
+.parent-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #f0f0f0;
+}
+
+/* Buttons Container */
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;         /* Space between buttons */
+    width: 100%;
+    padding: 20px;     /* Space inside the container */
+}
+
+/* Common Button Styles */
+.connect-to-crm,
+.choose-lead {
+    width: 80%;             /* Buttons occupy 80% of container width */
+    max-width: 300px;       /* Adjust as needed */
+    height: 60px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    padding: 0;             /* Remove padding to prevent width issues */
+    line-height: 60px;      /* Vertically center the text */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transitions */
+}
+
+/* Hover Effects */
+.connect-to-crm:hover,
+.choose-lead:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+/* Omniview Styles */
+.omniview {
+    width: 100px;
+    height: 100px;
+    background: url('assets/Omniview.png') no-repeat center center;
+    background-size: contain;
+    margin-top: 20px;
+}
+
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto; /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px;
+    border-radius: 8px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+}
+
+.customer-item {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+}
+
+.customer-item:hover {
+    background-color: #f1f1f1;
+}
+
+/* Loading Indicator Styles */
+.loading {
+    font-size: 18px;
+    color: #333333;
+    margin-top: 20px;
+}
+
+/* Data Container Styles (Optional) */
+.data-container {
+    width: 90%;
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    padding: 10px;
+    margin-top: 20px;
+    font-family: monospace;
+    font-size: 14px;
+    white-space: pre-wrap; /* Preserve formatting */
+}
+
+/* Pipeline Container Styles */
+#pipelineContainer {
+    width: 90%;             /* Adjust width as needed */
+    max-width: 450px;       /* Ensure it fits within the popup */
+    padding: 20px;
+    display: none;          /* Hidden by default */
+    box-sizing: border-box;
+}
+
+#pipelineContainer h2 {
+    text-align: center;
+    margin-bottom: 100px;
+    margin-top: 20px;
+}
+
+.pipeline-stage {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+}
+
+.completed {
+    background-color: grey;
+}
+
+.active {
+    background-color: blue;
+}
+
+.pending {
+    background-color: lightblue;
+}
+
+/* Back Button Styles */
+#backButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#backButton:hover {
+    background-color: #333;
+}
